@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FUNNY SQUAD</title>
+  <style>
+    body {
+      background-color: #dea2b9e3;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      margin-top: 120px;
+    }
+    h1 {
+      color: #f4f407f5;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    h1:hover {
+      color: #f00764;
+      transform: scale(1.1);
+    }
+    h3 {
+        color: white;
+        background-color: rgb(8, 74, 255);
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    h3:hover {
+        background-color: rgb(181, 9, 75);
+        transform: scale(1.05);
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 30px;
+      font-size: 20px;
+      color: #ee0606;
+    }
+    li {
+      margin: 8px 0;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    body {
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  margin-top: 120px;
+  background: linear-gradient(270deg, #f925cf, #fcf926cc, #89f7fe, #0078ff);
+  background-size: 800% 800%;
+  animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+h1 {
+  color: #fff;
+  text-shadow: 0 0 10px #eff83f, 0 0 20px #ddfd2a, 0 0 40px #0078ff;
+  transition: 0.5s;
+}
+h1:hover {
+  text-shadow: 0 0 20px #ff00bf, 0 0 40px #00c6ff, 0 0 60px #00c6ff;
+  transform: scale(1.1);
+}
+
+#tombol {
+  color: rgb(244, 19, 19);
+  font-weight: bold;
+  font-size: 20px;
+  background-color: #edf41f;
+  display: inline-block;
+  padding: 10px 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+#tombol:hover {
+  background-color: #eeff00e0;
+}
+
+li {
+  color: rgb(14, 2, 11);
+  font-size: 18px;
+  list-style: none;
+  margin: 5px 0;
+  transition: 0.3s;
+}
+li:hover {
+  color: #e3fb29;
+  font-weight: bold;
+  transform: scale(1.1);
+}
+.love {
+  position: absolute;
+  color: red;
+  font-size: 24px;
+  animation: floatUp 1s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px) scale(1.5);
+  }
+}
+
+  </style>
+</head>
+<body>
+  <h1>FUNNY SQUAD</h1>
+    <h3 onclick="tampilkanNama()">Klik di sini untuk lihat anggota</h3>
+
+  <ul id="daftarNama"></ul>
+    <audio id="klikSuara" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
+  <script>
+    function tampilkanNama() {
+      document.getElementById("klikSuara").play();
+      const nama = ["Safina", "Risna", "Uut", "Jumi", "Hariati", "Indri", "Aswin", "Mbilu", "Feby"];
+      const daftar = document.getElementById("daftarNama");
+      
+      // Bersihkan dulu biar gak dobel kalau diklik lagi
+      daftar.innerHTML = "";
+      
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < nama.length) {
+            const li = document.createElement("li");
+            li.textContent = nama[i];
+        // tambahkan efek love
+        li.addEventListener("click", (e) => {
+            const love = document.createElement("span");
+            love.textContent = "❤️";
+            love.classList.add("love");
+
+            // tentukan posisi
+            love.style.left = e.pageX + "px";
+            love.style.top = e.pageY + "px";
+            document.body.appendChild(love);
+            setTimeout(() => {
+                love.remove();
+            }, 1000);
+        })
+        daftar.appendChild(li);
+        i++;
+    } else {
+        clearInterval(interval);
+    }
+}, 400);
+    }
+  </script>
+</body>
+</html>
