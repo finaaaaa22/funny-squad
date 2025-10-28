@@ -170,7 +170,8 @@
     const pesan = document.getElementById("pesan");
 
     input.addEventListener("input", function() {
-      if (input.value.trim().toLowerCase() === "funny squad", "safina", "jumi", "indri") {
+      const teks = input.value.trim().toLowerCase(); 
+      if ( teks === "funny squad" || teks === "safina" || teks === "jumi"|| teks === "indri") {
         pesan.classList.add("show");
       } else {
         pesan.classList.remove("show");
