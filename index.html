@@ -9,11 +9,10 @@
     body {
       font-family: 'Poppins', sans-serif;
       text-align: center;
-      margin-top: 60px;
+      margin-top: 100px;
       background: linear-gradient(270deg, #f925cf, #fcf926cc, #89f7fe, #0078ff);
       background-size: 800% 800%;
       animation: gradientShift 8s ease infinite;
-      overflow-x: hidden;
     }
 
     @keyframes gradientShift {
@@ -24,7 +23,6 @@
 
     h1 {
       font-family: 'Fredoka One', cursive;
-      font-size: 45px;
       color: #fff;
       text-shadow: 0 0 10px #eff83f, 0 0 20px #ddfd2a, 0 0 40px #0078ff;
       transition: 0.5s;
@@ -36,43 +34,7 @@
       transform: scale(1.1);
     }
 
-    /* Input ketik */
-    #teks {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 18px;
-      border: none;
-      border-radius: 10px;
-      text-align: center;
-      outline: none;
-      background-color: #fff8b5;
-    }
-
-    /* Teks "HELLO CANTIK!" */
-    #pesan {
-      margin-top: 20px;
-      font-size: 35px;
-      font-weight: bold;
-      opacity: 0;
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .muncul {
-      opacity: 1;
-      transform: scale(1.1);
-      color: #fffb00;
-      text-shadow: 0 0 20px #ff0080, 0 0 40px #00c6ff;
-      animation: berdenyut 1s infinite alternate;
-    }
-
-    @keyframes berdenyut {
-      from { transform: scale(1); }
-      to { transform: scale(1.2); }
-    }
-
-    /* Tombol daftar */
     #tombol {
-      margin-top: 40px;
       color: rgb(244, 19, 19);
       font-weight: bold;
       font-size: 20px;
@@ -86,13 +48,19 @@
 
     #tombol:hover {
       background-color: #eeff00e0;
-      transform: scale(1.05);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 30px;
+      font-size: 20px;
+      color: #ee0606;
     }
 
     li {
       color: rgb(14, 2, 11);
       font-size: 18px;
-      list-style: none;
       margin: 5px 0;
       transition: 0.3s;
     }
@@ -112,86 +80,69 @@
     }
 
     @keyframes floatUp {
-      0% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(-100px) scale(1.5);
-      }
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-100px) scale(1.5); }
     }
 
-    /* Emoji berjatuhan */
-    .emoji {
-      position: fixed;
-      top: -20px;
+    /* Tampilan input */
+    #inputKata {
+      margin-top: 50px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      outline: none;
+      text-align: center;
+      background-color: #fff;
+      color: #444;
+      box-shadow: 0 0 10px rgba(255,255,255,0.7);
+      transition: 0.3s;
+    }
+
+    #inputKata:focus {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #ff66cc;
+    }
+
+    #pesan {
       font-size: 28px;
-      animation: jatuh 3s linear forwards;
-      pointer-events: none;
-      z-index: 10;
+      font-weight: bold;
+      color: #ff008c;
+      margin-top: 20px;
+      opacity: 0;
+      transition: opacity 0.5s;
     }
 
-    @keyframes jatuh {
-      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    #pesan.show {
+      opacity: 1;
+      animation: blink 1s infinite;
     }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
   </style>
 </head>
 <body>
   <h1>FUNNY SQUAD</h1>
-
-  <!-- Fitur ketik -->
-  <input type="text" id="teks" placeholder="Ketik: FUNNY SQUAD...">
-  <div id="pesan">HELLO CANTIK! 💖</div>
-
-  <!-- Tombol & daftar anggota -->
   <button id="tombol" onclick="tampilkanNama()">🎧 Klik di sini untuk lihat anggota</button>
+
   <ul id="daftarNama"></ul>
 
-  <!-- Suara -->
+  <!-- Tambahan input -->
+  <input type="text" id="inputKata" placeholder="Ketik sesuatu di sini...">
+  <div id="pesan">HELLO CANTIK! 💖</div>
+
   <audio id="klikSuara" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
-  <audio id="ding" src="https://www.fesliyanstudios.com/play-mp3/6533" preload="auto"></audio>
 
   <script>
-    const input = document.getElementById('teks');
-    const pesan = document.getElementById('pesan');
-    const ding = document.getElementById('ding');
-
-    // Fungsi membuat emoji jatuh 💕
-    function buatEmojiJatuh() {
-      const emojiList = ["💖", "💕", "💞", "💓", "💗", "💘"];
-      for (let i = 0; i < 15; i++) {
-        const emoji = document.createElement("div");
-        emoji.textContent = emojiList[Math.floor(Math.random() * emojiList.length)];
-        emoji.classList.add("emoji");
-        emoji.style.left = Math.random() * 100 + "vw";
-        emoji.style.animationDuration = (2 + Math.random() * 2) + "s";
-        document.body.appendChild(emoji);
-        setTimeout(() => emoji.remove(), 3000);
-      }
-    }
-
-    // Efek ketik FUNNY SQUAD
-    input.addEventListener('input', () => {
-      if (input.value.trim().toUpperCase() === 'FUNNY SQUAD') {
-        if (!pesan.classList.contains('muncul')) {
-          pesan.classList.add('muncul');
-          ding.play();
-          buatEmojiJatuh();
-        }
-      } else {
-        pesan.classList.remove('muncul');
-      }
-    });
-
-    // Efek daftar nama + love
     function tampilkanNama() {
       document.getElementById("klikSuara").play();
       const nama = ["Safina", "Risna", "Uut", "Jumi", "Hariati", "Indri", "Aswin", "Mbilu", "Feby"];
       const daftar = document.getElementById("daftarNama");
       daftar.innerHTML = "";
-
       let i = 0;
       const interval = setInterval(() => {
         if (i < nama.length) {
@@ -213,6 +164,18 @@
         }
       }, 400);
     }
+
+    // Fitur baru: deteksi teks "funny squad"
+    const input = document.getElementById("inputKata");
+    const pesan = document.getElementById("pesan");
+
+    input.addEventListener("input", function() {
+      if (input.value.trim().toLowerCase() === "funny squad") {
+        pesan.classList.add("show");
+      } else {
+        pesan.classList.remove("show");
+      }
+    });
   </script>
 </body>
 </html>
