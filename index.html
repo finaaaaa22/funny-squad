@@ -4,19 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FUNNY SQUAD</title>
-
-  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
   <style>
-    /* ====== GAYA UMUM ====== */
     body {
       font-family: 'Poppins', sans-serif;
       text-align: center;
-      margin-top: 120px;
+      margin-top: 60px;
       background: linear-gradient(270deg, #f925cf, #fcf926cc, #89f7fe, #0078ff);
       background-size: 800% 800%;
       animation: gradientShift 8s ease infinite;
+      overflow-x: hidden;
     }
 
     @keyframes gradientShift {
@@ -27,6 +24,7 @@
 
     h1 {
       font-family: 'Fredoka One', cursive;
+      font-size: 45px;
       color: #fff;
       text-shadow: 0 0 10px #eff83f, 0 0 20px #ddfd2a, 0 0 40px #0078ff;
       transition: 0.5s;
@@ -38,8 +36,43 @@
       transform: scale(1.1);
     }
 
-    /* ====== TOMBOL ====== */
+    /* Input ketik */
+    #teks {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      text-align: center;
+      outline: none;
+      background-color: #fff8b5;
+    }
+
+    /* Teks "HELLO CANTIK!" */
+    #pesan {
+      margin-top: 20px;
+      font-size: 35px;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .muncul {
+      opacity: 1;
+      transform: scale(1.1);
+      color: #fffb00;
+      text-shadow: 0 0 20px #ff0080, 0 0 40px #00c6ff;
+      animation: berdenyut 1s infinite alternate;
+    }
+
+    @keyframes berdenyut {
+      from { transform: scale(1); }
+      to { transform: scale(1.2); }
+    }
+
+    /* Tombol daftar */
     #tombol {
+      margin-top: 40px;
       color: rgb(244, 19, 19);
       font-weight: bold;
       font-size: 20px;
@@ -49,21 +82,11 @@
       border-radius: 10px;
       cursor: pointer;
       transition: 0.3s;
-      border: none;
-      margin-top: 20px;
     }
 
     #tombol:hover {
       background-color: #eeff00e0;
-    }
-
-    /* ====== DAFTAR ANGGOTA ====== */
-    ul {
-      list-style: none;
-      padding: 0;
-      margin-top: 30px;
-      font-size: 20px;
-      color: #ee0606;
+      transform: scale(1.05);
     }
 
     li {
@@ -72,8 +95,6 @@
       list-style: none;
       margin: 5px 0;
       transition: 0.3s;
-      opacity: 0;
-      animation: fadeIn 0.5s ease-in-out forwards;
     }
 
     li:hover {
@@ -82,12 +103,6 @@
       transform: scale(1.1);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ====== EFEK LOVE ====== */
     .love {
       position: absolute;
       color: red;
@@ -106,23 +121,75 @@
         transform: translateY(-100px) scale(1.5);
       }
     }
+
+    /* Emoji berjatuhan */
+    .emoji {
+      position: fixed;
+      top: -20px;
+      font-size: 28px;
+      animation: jatuh 3s linear forwards;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    @keyframes jatuh {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
   </style>
 </head>
-
 <body>
   <h1>FUNNY SQUAD</h1>
-  <button id="tombol" onclick="tampilkanNama()">🎧 Klik di sini untuk lihat anggota</button>
 
+  <!-- Fitur ketik -->
+  <input type="text" id="teks" placeholder="Ketik: FUNNY SQUAD...">
+  <div id="pesan">HELLO CANTIK! 💖</div>
+
+  <!-- Tombol & daftar anggota -->
+  <button id="tombol" onclick="tampilkanNama()">🎧 Klik di sini untuk lihat anggota</button>
   <ul id="daftarNama"></ul>
+
+  <!-- Suara -->
   <audio id="klikSuara" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
+  <audio id="ding" src="https://www.fesliyanstudios.com/play-mp3/6533" preload="auto"></audio>
 
   <script>
+    const input = document.getElementById('teks');
+    const pesan = document.getElementById('pesan');
+    const ding = document.getElementById('ding');
+
+    // Fungsi membuat emoji jatuh 💕
+    function buatEmojiJatuh() {
+      const emojiList = ["💖", "💕", "💞", "💓", "💗", "💘"];
+      for (let i = 0; i < 15; i++) {
+        const emoji = document.createElement("div");
+        emoji.textContent = emojiList[Math.floor(Math.random() * emojiList.length)];
+        emoji.classList.add("emoji");
+        emoji.style.left = Math.random() * 100 + "vw";
+        emoji.style.animationDuration = (2 + Math.random() * 2) + "s";
+        document.body.appendChild(emoji);
+        setTimeout(() => emoji.remove(), 3000);
+      }
+    }
+
+    // Efek ketik FUNNY SQUAD
+    input.addEventListener('input', () => {
+      if (input.value.trim().toUpperCase() === 'FUNNY SQUAD') {
+        if (!pesan.classList.contains('muncul')) {
+          pesan.classList.add('muncul');
+          ding.play();
+          buatEmojiJatuh();
+        }
+      } else {
+        pesan.classList.remove('muncul');
+      }
+    });
+
+    // Efek daftar nama + love
     function tampilkanNama() {
       document.getElementById("klikSuara").play();
       const nama = ["Safina", "Risna", "Uut", "Jumi", "Hariati", "Indri", "Aswin", "Mbilu", "Feby"];
       const daftar = document.getElementById("daftarNama");
-
-      // Bersihkan dulu biar gak dobel kalau diklik lagi
       daftar.innerHTML = "";
 
       let i = 0;
@@ -130,19 +197,15 @@
         if (i < nama.length) {
           const li = document.createElement("li");
           li.textContent = nama[i];
-
-          // Efek love saat diklik
           li.addEventListener("click", (e) => {
             const love = document.createElement("span");
             love.textContent = "❤️";
             love.classList.add("love");
-
             love.style.left = e.pageX + "px";
             love.style.top = e.pageY + "px";
             document.body.appendChild(love);
             setTimeout(() => love.remove(), 1000);
           });
-
           daftar.appendChild(li);
           i++;
         } else {
